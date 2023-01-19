@@ -1,0 +1,78 @@
+﻿@model List<TestApp.Models.EmployeeViewModel>
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+@{
+    ViewData["Title"] = "Employee Details";
+    var successMessage = TempData["successMessage"]?.ToString();
+    var errorMessage = TempData["errorMessage"]?.ToString();
+}
+<h3>@ViewData["Title"]</h3>
+    </hr>
+@if (!string.IsNullOrWhiteSpace(@successMessage))
+{
+    <div class="alert alert-success">
+        <strong>Success!</strong>@successMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+    </div>
+}
+else if (!string.IsNullOrWhiteSpace(errorMessage))
+{
+    <div class="alert alert-danger">
+        <strong>Error!</strong>@errorMessage
+        <button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<form>
+    <button asp-action="Create" asp-controller="Employee" class="btn btn-primary mb-3">Create Employee</button>
+    <table class="table table-responsive table-hover table-bordered">
+        <thead>
+            <tr class="table-active">
+                <th>Id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Address</th>
+                <th>Gross Salary</th>
+                <th>Postion</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var employee in Model)
+                {
+                    <tr>
+                        <td>@employee.Id</td>
+                        <td>@employee.FirstName</td>
+                        <td>@employee.LastName</td>
+                        <td>@employee.Address</td>
+                        <td>@employee.GrossSalary</td>
+                        <td>@employee.Position</td>
+                        <td>
+                            <a asp-controller="Employee" asp-action="View" asp-route-id="@employee.Id" class="btn btn-primary">View</a>
+                            <a asp-controller="Employee" asp-action="ExportToCSV" asp-route-id="@employee.Id" class="btn btn-info">.csv</a>
+                            <a asp-controller="Employee" asp-action="ExportToExcel" asp-route-id="@employee.Id" class="btn btn-success">.xlsx</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">
+                        <div>
+                            No Employees available at this moment!
+                        </div>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</form>

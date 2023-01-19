@@ -1,0 +1,54 @@
+﻿@model TestApp.Models.EmployeeViewModel
+
+@{
+      ViewData["Title"] = "View Employee";
+}
+<h3>@ViewData["Title"]</h3>
+<hr />
+
+<form action="View" method="get">
+         <div class="mb-3">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-control" asp-for="Id" readonly />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-control" asp-for="FirstName" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+             <div class="mb-3">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-control" asp-for="LastName" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+             <div class="mb-3">
+                <label class="form-label">Address</label>
+                <input type="text" class="form-control" asp-for="Address" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+             <div class="mb-3">
+                <label class="form-label">Gross Salary</label>
+                <div class="input-group">
+                    <span class ="input-group-text">RSD</span>
+                    <input type="text" class="form-control" asp-for="GrossSalary" />
+                    <span asp-validation-for="GrossSalary" class="text-danger"></span>
+                </div>
+             </div>
+             <div class="mb-3">
+                <label class="form-label">Net Salary</label>
+                <div class="input-group">
+                    <span class ="input-group-text">RSD</span>
+                    <input type="text" class="form-control" asp-for="GrossSalary" />
+                    <span asp-validation-for="GrossSalary" class="text-danger"></span>
+                </div>
+            </div>
+             <div class="mb-3">
+                <label class="form-label">Position</label>
+                <input type="text" class="form-control" asp-for="Position" />
+                <span asp-validation-for="Position" class="text-danger"></span>
+            </div>
+            <div class="d-grid">
+                <button type="sumbit" class="btn btn-primary">Submit</button>
+            </div>
+</form>
