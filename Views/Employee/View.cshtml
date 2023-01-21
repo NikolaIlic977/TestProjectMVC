@@ -1,54 +1,190 @@
 ﻿@model TestApp.Models.EmployeeViewModel
 
 @{
-      ViewData["Title"] = "View Employee";
+    ViewData["Title"] = "View Employee";
 }
 <h3>@ViewData["Title"]</h3>
 <hr />
 
 <form action="View" method="get">
-         <div class="mb-3">
-                <label class="form-label">First Name</label>
-                <input type="text" class="form-control" asp-for="Id" readonly />
-            </div>
+    <div class="mb-3">
+        <label class="form-label">First Name</label>
+        <input type="text" class="form-control" asp-for="Id" readonly />
+    </div>
 
-            <div class="mb-3">
-                <label class="form-label">First Name</label>
-                <input type="text" class="form-control" asp-for="FirstName" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+    <div class="mb-3">
+        <label class="form-label">First Name</label>
+        <input type="text" class="form-control" asp-for="FirstName" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Last Name</label>
+        <input type="text" class="form-control" asp-for="LastName" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Address</label>
+        <input type="text" class="form-control" asp-for="Address" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Gross Salary</label>
+        <div class="input-group">
+            <span class="input-group-text">RSD</span>
+            <input type="text" class="form-control" id="input-gross-salary" asp-for="GrossSalary" />
+            <span asp-validation-for="GrossSalary" class="text-danger"></span>
+        </div>
+    </div>
+@*    <div class="mb-3">
+        <label class="form-label">Factor</label>
+        <div class="input-group" style="width: 100px;">
+            <input type="text" class="form-control" id="input-factor" value="30" onkeyup="calculateSalary()" />
+            <span class="input-group-text">%</span>
+        </div>
+    </div>*@
+
+
+    <div class="row g-4">
+        <div class="col-sm">
+            <label>PIO</label>
+            <div class="input-group" style="width: 100px;">
+                <input type="text" class="form-control" id="input-pio-percent" aria-label="Pio" readonly value="14">
+                <span class="input-group-text">%</span>
             </div>
-             <div class="mb-3">
-                <label class="form-label">Last Name</label>
-                <input type="text" class="form-control" asp-for="LastName" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+            <div class="input-group" style="width: 200px;">
+                <input type="text" class="form-control" id="input-pio-rsd" aria-label="Pio" readonly>
+                <span class="input-group-text">RSD</span>
             </div>
-             <div class="mb-3">
-                <label class="form-label">Address</label>
-                <input type="text" class="form-control" asp-for="Address" />
-                <span asp-validation-for="Address" class="text-danger"></span>
+        </div>
+        <div class="col-sm">
+            <label>Health</label>
+            <div class="input-group" style="width: 100px;">
+                <input type="text" class="form-control" id="input-health-percent" aria-label="Health" readonly value="5">
+                <span class="input-group-text">%</span>
             </div>
-             <div class="mb-3">
-                <label class="form-label">Gross Salary</label>
-                <div class="input-group">
-                    <span class ="input-group-text">RSD</span>
-                    <input type="text" class="form-control" asp-for="GrossSalary" />
-                    <span asp-validation-for="GrossSalary" class="text-danger"></span>
-                </div>
-             </div>
-             <div class="mb-3">
-                <label class="form-label">Net Salary</label>
-                <div class="input-group">
-                    <span class ="input-group-text">RSD</span>
-                    <input type="text" class="form-control" asp-for="GrossSalary" />
-                    <span asp-validation-for="GrossSalary" class="text-danger"></span>
-                </div>
+            <div class="input-group" style="width: 200px;">
+                <input type="text" class="form-control" id="input-health-rsd" aria-label="Health" readonly>
+                <span class="input-group-text">RSD</span>
             </div>
-             <div class="mb-3">
-                <label class="form-label">Position</label>
-                <input type="text" class="form-control" asp-for="Position" />
-                <span asp-validation-for="Position" class="text-danger"></span>
+        </div>
+        <div class="col-sm">
+            <label>Income Tax</label>
+            <div class="input-group" style="width: 100px;">
+                <input type="text" class="form-control" id="input-income-percent" aria-label="Income" readonly value="10">
+                <span class="input-group-text">%</span>
             </div>
-            <div class="d-grid">
-                <button type="sumbit" class="btn btn-primary">Submit</button>
+            <div class="input-group" style="width: 200px;">
+                <input type="text" class="form-control" id="input-income-rsd" aria-label="Income" readonly>
+                <span class="input-group-text">RSD</span>
+            </div>
+        </div>
+        <div class="col-sm">
+            <label>Unemployment tax</label>
+            <div class="input-group" style="width: 100px;">
+                <input type="text" class="form-control" id="input-unemployment-percent" aria-label="Unemployment" readonly value="1">
+                <span class="input-group-text">%</span>
+            </div>
+            <div class="input-group" style="width: 200px;">
+                <input type="text" class="form-control" id="input-unemployment-rsd" aria-label="Unemployment" readonly>
+                <span class="input-group-text">RSD</span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="mb-3">
+        <label class="form-label">Net Salary</label>
+        <div class="input-group">
+            <span class="input-group-text">RSD</span>
+            <input type="text" class="form-control" id="input-net-salary" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">EUR</label>
+        <div class="input-group">
+            <span class="input-group-text">EUR</span>
+            <input type="text" class="form-control" id="input-net-salary-eur" />
+        </div>
+        <div class="mb-3">
+            <label class="form-label">USD</label>
+            <div class="input-group">
+                <span class="input-group-text">USD</span>
+                <input type="text" class="form-control" id="input-net-salary-usd" />
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Position</label>
+            <input type="text" class="form-control" asp-for="Position" />
+            <span asp-validation-for="Position" class="text-danger"></span>
+        </div>
+        <div class="row g-2">
+            <div class="col-sm">
+                <button type="sumbit" class="btn btn-danger">Export PDF</button>
+                <button type="sumbit" class="btn btn-secondary">Send to Email</button>
             </div>
 </form>
+
+<script>
+    window.onload = function() {
+        calculateSalary();
+    }
+
+    function calculateSalary() {
+        const netSalary = document.getElementById("input-net-salary");
+        const grossSalary = document.getElementById("input-gross-salary");
+        const grossSalaryValue = parseFloat(grossSalary.value);
+        const taxes = calculateContributionTaxes(grossSalaryValue);
+        netSalary.value = grossSalaryValue - taxes;
+
+        calculateOtherCurrencies();
+    }
+
+    function calculateOtherCurrencies() {
+        const apikey = '8f29c513d11264a866163935';
+
+        const response = fetch('https://v6.exchangerate-api.com/v6/' + apikey + '/pair/RSD/EUR')
+            .then(response => response.json())
+            .then((data) => {
+                const netSalary = document.getElementById("input-net-salary");
+                const netSalaryEUR = document.getElementById("input-net-salary-eur");
+                netSalaryEUR.value = netSalary.value * data.conversion_rate;
+            })
+        const responseUsd = fetch('https://v6.exchangerate-api.com/v6/' + apikey + '/pair/RSD/USD')
+            .then(response => response.json())
+            .then((data) => {
+                const netSalary = document.getElementById("input-net-salary");
+                const netSalaryUSD = document.getElementById("input-net-salary-usd");
+                netSalaryUSD.value = netSalary.value * data.conversion_rate;
+            })
+    }
+
+function calculateContributionTaxes(grossSalary) {
+    const pioPerc = document.getElementById('input-pio-percent');
+    const healthPerc = document.getElementById('input-health-percent');
+    const incomePerc = document.getElementById('input-income-percent');
+    const unemploymentPerc = document.getElementById('input-unemployment-percent');
+
+    const pioRsd = document.getElementById('input-pio-rsd');
+    const healthRsd= document.getElementById('input-health-rsd');
+    const incomeRsd= document.getElementById('input-income-rsd');
+    const unemploymentRsd = document.getElementById('input-unemployment-rsd');
+
+    const pioPercValue = parseFloat(pioPerc.value);
+    const healthPercValue = parseFloat(healthPerc.value);
+    const incomePercValue = parseFloat(incomePerc.value);
+    const unemploymentPercValue = parseFloat(unemploymentPerc.value);
+
+    const pioCost = (pioPercValue / 100) * grossSalary;
+    const healthCost = (healthPercValue / 100) * grossSalary;
+    const incomeCost = (incomePercValue / 100) * grossSalary;
+    const unemploymentCost = (unemploymentPercValue / 100) * grossSalary;
+
+    pioRsd.value = pioCost.toFixed(2);
+    healthRsd.value = healthCost.toFixed(2);
+    incomeRsd.value = incomeCost.toFixed(2);
+    unemploymentRsd.value = unemploymentCost.toFixed(2);
+
+    return pioCost + healthCost + incomeCost + unemploymentCost;
+}
+</script>
